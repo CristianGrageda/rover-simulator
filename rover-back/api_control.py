@@ -1,5 +1,3 @@
-# uvicorn api_control:app --port 8000
-
 from fastapi import FastAPI, WebSocket
 import websockets
 import asyncio

@@ -11,6 +11,8 @@ class RoverStatus(Enum):
 
 
 class Rover:
+
+    # Initial state of rover
     def __init__(self):
         self.x = 0.0
         self.y = 0.0
@@ -21,6 +23,7 @@ class Rover:
         self.temperature = 20.0
         self.status = RoverStatus.NOMINAL
 
+    # Update rover status every x amount of time (position, battery, temperature)
     def update(self, delta_time):
         if self.status == RoverStatus.NOMINAL:
             rad = math.radians(self.direction)
@@ -42,10 +45,13 @@ class Rover:
         else:
             self.status = RoverStatus.NOMINAL
 
+    # Returns rover telemetry in its current state
     def telemetry(self):
         return {
-            "x": round(self.x, 2),
-            "y": round(self.y, 2),
+            "position": {
+                "x": round(self.x, 2),
+                "y": round(self.y, 2),
+            },
             "battery": round(self.battery, 2),
             "temperature": round(self.temperature, 2),
             "status": self.status.value

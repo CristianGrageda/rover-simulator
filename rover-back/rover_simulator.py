@@ -1,5 +1,3 @@
-# uvicorn rover_simulator:app --port 8001
-
 from fastapi import FastAPI, WebSocket
 import asyncio
 from rover import Rover
