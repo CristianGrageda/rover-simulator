@@ -71,3 +71,10 @@ This architecture allows the simulator to be replaced by real rover hardware wit
 
 ## 📊 Mission Control UI
 (Coming soon)
+
+Frontend (UI)
+      ↓
+api_control
+      ↓
+rover_simulator (today)
+rover_hardware   (tomorrow)
