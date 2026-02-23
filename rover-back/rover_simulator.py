@@ -1,34 +1,19 @@
-from fastapi import FastAPI
-import time
-import threading
+# uvicorn rover_simulator:app --port 8001
+
+from fastapi import FastAPI, WebSocket
+import asyncio
 from rover import Rover
 
 app = FastAPI()
 rover = Rover()
-TICK = 1
 
-def simulator_loop():
-    while True:
-        rover.update(TICK)
-        time.sleep(TICK)
-
-@app.on_event("startup")
-def start_sim():
-    threading.Thread(target=simulator_loop, daemon=True).start()
-
-@app.get("/telemetry")
-def telemetry():
-    return rover.telemetry()
-
-@app.post("/command/move")
-def move(direction: str):
-    #rover.move(direction)
-    return {"status": "ok", "direction": direction}
-
-@app.post("/command/stop")
-def stop():
-    #rover.stop()
-    return {"status": "stopped"}
-
-
-# uvicorn rover_simulator:app --port 8001
+@app.websocket("/ws/telemetry")
+async def telemetry_ws(ws: WebSocket):
+    await ws.accept()
+    try:
+        while True:
+            rover.update(1)
+            await ws.send_json(rover.telemetry())
+            await asyncio.sleep(1)
+    except Exception:
+        await ws.close()
