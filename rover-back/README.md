@@ -1,15 +1,3 @@
-This project simulates a rover and streams telemetry via WebSockets.
-The simulator can later be replaced by real hardware.
-
-The project is started with the following commands:
-uvicorn rover_simulator:app --port 8001
-uvicorn rover_control:app --port 8000
-
-Comunicacion:
-rover.py: Tiene la funcionalidad de ser un rover teniendo un estado que varia dependiendo de ciertos parametros (temperatura, bateria, posicion), estos datos se actualizan aleatoriamente cada x tiempo mediante un metodo simulador que puede utilizar quien lo consuma.
-rover_simulator.py: Tiene la funcionalidad de exponer la telemetria del rover (consumiendo rover.py) a traves de websockets mientras la actualiza cada x tiempo.
-api_control.py: Obtiene la telemetria expuesta por rover_simulator y la reexpone a traves de websockets. Por ahora solo hace eso, mas adelante tendra logica para controlar el rover.
-
 # Rover Simulation Project 🛰️
 
 This project simulates a planetary rover and streams its telemetry in real time using WebSockets.
